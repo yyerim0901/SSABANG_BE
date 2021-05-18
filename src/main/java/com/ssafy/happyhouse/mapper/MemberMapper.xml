@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.MemberMapper">
+	<select id="login" parameterType="map" resultType="MemberDto">
+		SELECT USERID, USERPW, USERNAME, USEREMAIL, USERADDRESS
+		FROM MEMBER
+		WHERE USERID=#{userid} AND USERPW=#{userpwd}
+	</select>
+
+	<insert id="insert" parameterType="MemberDto">
+	INSERT INTO MEMBER (USERID, USERPW, USERNAME, USEREMAIL, USERADDRESS)
+	VALUES(#{userid},#{userpw},#{username},#{useremail},#{useraddress})
+	</insert>
+	
+	<update id="modify" parameterType="MemberDto">
+	UPDATE MEMBER
+	SET USERPW=#{userpw}, USERNAME=#{username} , USEREMAIL=#{useremail} , USERADDRESS=#{useraddress}
+	WHERE USERID = #{userid}
+	</update>
+	
+	<delete id="delete">
+	DELETE
+	FROM MEMBER
+	WHERE USERID=#{userid}
+	</delete>
+	
+</mapper>
