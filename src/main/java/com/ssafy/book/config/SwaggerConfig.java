@@ -1,5 +1,5 @@
 package com.ssafy.book.config;
-
+// git test minsang 05/18 20:22
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
