@@ -19,6 +19,216 @@
 - [ ] 게시판 댓글 구현
 
 
+##### 메인페이지
+![image](/uploads/305b1407c1b1162cc8d88d5c99189f67/image.png)
+```java
+<script>
+// @ is an alias to /src
+
+export default {
+};
+</script>
+
+```
+
+##### 게시판
+![image](/uploads/dc7c53add1293b8c94abd3b7eadfbdb4/image.png)
+```java
+<script>
+export default {
+    name : 'BoardList',
+    data() {
+        return {
+            bnum:'',
+        }
+    },
+    created() {
+        this.$store.dispatch("getBoard");
+    },
+    methods: {
+        moveForm(){
+            this.$router.push("/addForm");
+        },
+        detailview(bnum){
+            console.log(bnum); 
+            this.$store.dispatch("selectOne", bnum);
+            this.$router.push("/detailBoard");
+        }
+    },
+    computed:{
+        boardlist(){
+            return this.$store.state.boards;
+        }
+    }
+}
+</script>
+```
+
+
+##### 글작성페이지
+![image](/uploads/1e5ba58f6e81444869341063ae0072bf/image.png)
+```java
+<script>
+export default {
+    name:'BoardForm',
+    data() {
+        return {
+            board:{
+                btitle:'',
+                bwriter:'',
+                bcontent:'',
+            }
+        }
+    },
+    methods: {
+        checkHandler() {
+            this.createHandler();
+        },
+        createHandler(){
+            this.$router.push("/board");
+        }
+    },
+}
+</script>
+```
+
+##### 글 상세페이지
+![image](/uploads/9fb62c3885b2c343464c672323c51ceb/image.png)
+```java
+<script>
+export default {
+
+    computed:{
+        boardlistitem(){
+            return this.$store.state.board;
+        }
+    },
+    methods: {
+        updateboard(){
+            this.$store.dispatch("updateBoardForm", this.boardlistitem);
+            this.$router.push("/updateboardform");
+        },
+        deleteboard(){
+            this.$store.dispatch("deleteBoard", this.boardlistitem.bnum);
+            this.$router.push("/board");
+        },
+        movelist(){
+            this.$router.push("/board");
+        },
+    },    
+}
+</script>
+```
+
+##### 글 수정페이지
+![image](/uploads/ad0448716e78daacfbf59dc1a2066510/image.png)
+```java
+<script>
+export default {
+    name:'UpdateBoardForm',
+    data() {
+        return {
+            board:{
+                bnum:'',
+                btitle: '',
+                bwriter: '',
+                bcontent: '',
+            }
+        }
+    },
+    created() {
+        this.board.bnum = this.boardlistitem.bnum;
+        this.board.btitle = this.boardlistitem.btitle;
+        this.board.bwriter = this.boardlistitem.bwriter;
+        this.board.bcontent = this.boardlistitem.bcontent;
+    },
+    computed:{
+        boardlistitem(){
+            return this.$store.state.board;
+        }
+    },
+    methods: {
+        movedetailboard(){
+            this.$store.dispatch("updateBoard", this.board);
+            this.$router.push("/detailboard");
+        },
+    },
+}
+</script>
+```
+
+##### Store index.js 파일
+```java
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    houses: [],
+    boards: [],
+    comments: [],
+    board: {},
+  },
+  getters: {
+    boardList(state) {
+      return state.boards;
+    },
+  },
+  mutations: {
+    ADD_BOARD(state, boardItem) {
+      state.boards.push(boardItem);
+    },
+    GET_BOARD(state, payload) {
+      state.boards = payload;
+    },
+    SELECT_ONE(state, payload) {
+      state.board = payload;
+    },
+  },
+  actions: {
+    addBoard({ commit }, boardItem) {
+      http
+        .post("/board", boardItem)
+        .then(() => {
+          commit("ADD_BOARD", boardItem);
+        })
+        .catch(() => {
+          alert("등록 중 에러가 발생했습니다.");
+        });
+    },
+    getBoard({ commit }) {
+      http.get("/board").then((resp) => {
+        commit("GET_BOARD", resp.data);
+      });
+    },
+    selectOne({ commit }, bnum) {
+      http.get(`/board/${bnum}`).then((resp) => {
+        console.log("action bnum :" + bnum);
+        commit("SELECT_ONE", resp.data);
+      });
+    },
+    updateBoardForm({ commit }, boardItem) {
+      commit("SELECT_ONE", boardItem);
+    },
+    updateBoard({ commit }, boardItem) {
+      console.log(boardItem);
+      http.put(`/board/${boardItem.bnum}`, boardItem).then(() => {
+        commit("SELECT_ONE", boardItem);
+      });
+    },
+    deleteBoard({ commit }, bnum) {
+      http.delete(`/board/${bnum}`).then(() => {
+        http.get("/board").then((resp) => {
+          commit("GET_BOARD", resp.data);
+        });
+      });
+    },
+  },
+});
+
+
+```
+
+
 # BoardController 변경
 
 ## LIST
