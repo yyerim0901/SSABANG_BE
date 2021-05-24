@@ -10,10 +10,11 @@
     	</selectKey>
 	</insert>
 	
-	<select id="selectAll" resultType="com.ssafy.happyhouse.dto.BoardDto">
+	<select id="selectAll" parameterType="map" resultType="com.ssafy.happyhouse.dto.BoardDto">
 	SELECT *
 	FROM BOARD
 	ORDER BY BNUM DESC
+	limit #{start}, #{countperpage}
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="boardDtoList">
@@ -95,4 +96,8 @@
 	WHERE ${searchCondition} LIKE '%${key}%'
 	</select>
 	
+	<select id="getTotBoardList" resultType="int">
+	SELECT COUNT(*)
+	FROM BOARD
+	</select>
 </mapper>

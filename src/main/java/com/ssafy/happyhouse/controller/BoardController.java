@@ -56,12 +56,39 @@ public class BoardController {
 //			return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 //	}
 	
-	@GetMapping
-	public ResponseEntity<List<BoardDto>> list(){
-		return new ResponseEntity<>(bservice.list(),HttpStatus.OK);
+	public static final int COUNT_PER_PAGE = 15;
+	
+	@GetMapping(value={"/list","/list/{pagenum}"})
+	public ResponseEntity<Map<String, Object>> list(@PathVariable(required=false) Integer pagenum){
+		int page=0;
+		if(pagenum==null) page=1;
+		else page = pagenum;
+		
+		int totBoardList = bservice.getTotBoardList();
+		int totpage, startpage, endpage, currpage = page;
+		totpage = totBoardList/COUNT_PER_PAGE;
+		if(totBoardList%COUNT_PER_PAGE != 0) totpage++;
+		startpage = ((currpage-1)/10)*10 + 1;
+		endpage = startpage+9;
+		if(endpage > totpage) endpage = totpage;
+		
+		Map<String, Object> map = new HashMap<>();
+		int start = (currpage-1)*COUNT_PER_PAGE;
+		map.put("start", start);
+		map.put("countperpage", COUNT_PER_PAGE);
+		List<BoardDto> list = bservice.list(map);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("data", list);
+		result.put("startpage", startpage);
+		result.put("currpage", currpage);
+		result.put("endpage", endpage);
+		result.put("totpage", totpage);
+		
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
-	@GetMapping("{bnum}")
+	@GetMapping("/detail/{bnum}")
 	public ResponseEntity<BoardDto> read(@PathVariable int bnum) {
 		BoardDto dto = bservice.read(bnum);
 		return new ResponseEntity<BoardDto>(dto, HttpStatus.OK);

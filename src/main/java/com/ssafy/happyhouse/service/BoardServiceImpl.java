@@ -58,8 +58,8 @@ public class BoardServiceImpl implements BoardService{
 		return pageInfo;
 	}
 	
-	public List<BoardDto> list(){
-		return bdao.getMapper(BoardMapper.class).selectAll();
+	public List<BoardDto> list(Map<String, Object> map){
+		return bdao.getMapper(BoardMapper.class).selectAll(map);
 	}
 	
 	//원래 int형에서 void로 변경
@@ -92,6 +92,9 @@ public class BoardServiceImpl implements BoardService{
 		return bdao.getMapper(BoardMapper.class).delete(bnum);
 	}
 
+	public int getTotBoardList() {
+		return bdao.getMapper(BoardMapper.class).getTotBoardList();
+	}
 
 	///////////////////////////////////////////////////////////////////
 	public List<CommentDto> getCmtList(int bnum){
@@ -109,5 +112,6 @@ public class BoardServiceImpl implements BoardService{
 			return true;
 		return false;
 	}
+	
 
 }
