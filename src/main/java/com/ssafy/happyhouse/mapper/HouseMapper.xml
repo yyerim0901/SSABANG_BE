@@ -2,21 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.mapper.HouseMapper">
-	<select id="allHouse" resultType="map">
-		select houseinfo.house_no as house_no, guname, house_aptname, house_area, dongname, dealAmount, lat, lng
-		from housedeal inner join houseinfo
-		where housedeal.house_no = houseinfo.house_no;
+
+	<!-- 전체 데이터 조회 -->
+	<select id="selectAllHousedeal" resultType="HousedealDto">
+		select *
+		from commonhouse;
 	</select>
 	
-	<select id="dongHouse" parameterType="string" resultType="map">
-		select houseinfo.house_no as house_no, guname, house_aptname, house_area, dongname, dealAmount, lat, lng
-		from housedeal inner join houseinfo
-		where housedeal.house_no = houseinfo.house_no and dongname like concat('%', #{dongname}, '%')
-	</select>
-	
-	<select id="aptHouse" parameterType="string" resultType="map">
-		select houseinfo.house_no as house_no, guname, house_aptname, house_area, dongname, dealAmount, lat, lng
-		from housedeal inner join houseinfo
-		where housedeal.house_no = houseinfo.house_no and house_aptname like concat('%', #{aptname}, '%')
+	<!-- 구 이름으로 조회 -->
+	<select id="selectGuHousedeal" parameterType="string" resultType="HousedealDto">
+		select *
+		from commonhouse
+		where gu_NM like CONCAT('%',#{guname},'%') or dong_NM like CONCAT('%',#{guname},'%'); 
 	</select>
 </mapper>
