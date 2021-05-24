@@ -70,8 +70,8 @@ public class BoardController {
 	@PostMapping
 	public ResponseEntity<String> write(@RequestBody BoardDto board, @PathVariable("upfile") MultipartFile[] files) throws IllegalStateException, IOException, SQLException {
 
-		if(!files[0].isEmpty()) {
-			//			String realPath = servletContext.getRealPath("/upload");
+		if(files!= null && !files[0].isEmpty()) {
+			//String realPath = servletContext.getRealPath("/upload");
 			String realPath = servletContext.getRealPath("/resources/img");
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = realPath + File.separator + today;
@@ -100,8 +100,8 @@ public class BoardController {
 		
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
-
-	@PutMapping("{bnum}")
+	
+	@PutMapping
 	public ResponseEntity<String> update(@RequestBody BoardDto boardDto) {
 		boolean result = bservice.update(boardDto);
 		if(!result)

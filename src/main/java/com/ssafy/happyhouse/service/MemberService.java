@@ -6,8 +6,10 @@ import com.ssafy.happyhouse.dto.MemberDto;
 
 public interface MemberService {
 	
+	public MemberDto read(String userid);
 	public MemberDto login(Map<String, String> map) throws Exception;
 	public boolean modify(MemberDto memberDto);
 	public int delete(String userid);
 	public void insert(MemberDto memberDto);
+
 }

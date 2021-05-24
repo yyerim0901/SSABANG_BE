@@ -7,19 +7,14 @@ public class MemberDto {
 	private String userpw;
 	private String useremail;
 	private String useraddress;
-	
-	
 
 	public MemberDto() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public MemberDto(String userid, String username, String userpw, String useremail, String useraddress) {
-		super();
+	public MemberDto(String userid, String userpw, String username, String useremail, String useraddress) {
 		this.userid = userid;
-		this.username = username;
 		this.userpw = userpw;
+		this.username = username;
 		this.useremail = useremail;
 		this.useraddress = useraddress;
 	}
@@ -40,12 +35,12 @@ public class MemberDto {
 		this.username = username;
 	}
 
-	public String getUserpwd() {
+	public String getUserpw() {
 		return userpw;
 	}
 
-	public void setUserpwd(String userpwd) {
-		this.userpw = userpwd;
+	public void setUserpw(String userpw) {
+		this.userpw = userpw;
 	}
 
 	public String getuseremail() {

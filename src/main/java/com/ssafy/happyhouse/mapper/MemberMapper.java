@@ -11,6 +11,7 @@ import com.ssafy.happyhouse.dto.MemberDto;
 @Mapper
 public interface MemberMapper {
 	
+	public MemberDto read(@Param("userid") String userid);
 	public MemberDto login(Map<String, String> map) throws SQLException;
 	public void insert(MemberDto memberDto);
 	public int modify(MemberDto memberDto);

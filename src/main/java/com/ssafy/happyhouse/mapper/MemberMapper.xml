@@ -2,10 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.mapper.MemberMapper">
+	
+	<select id="read" resultType="MemberDto">
+	SELECT *
+	FROM MEMBER
+	WHERE USERID=#{userid}
+	</select>
+
 	<select id="login" parameterType="map" resultType="MemberDto">
 		SELECT USERID, USERPW, USERNAME, USEREMAIL, USERADDRESS
 		FROM MEMBER
-		WHERE USERID=#{userid} AND USERPW=#{userpwd}
+		WHERE USERID=#{userid} AND USERPW=#{userpw}
 	</select>
 
 	<insert id="insert" parameterType="MemberDto">
@@ -24,5 +31,4 @@
 	FROM MEMBER
 	WHERE USERID=#{userid}
 	</delete>
-	
 </mapper>

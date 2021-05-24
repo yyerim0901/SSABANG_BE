@@ -15,8 +15,12 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public MemberDto read(String userid) {
+		return sqlSession.getMapper(MemberMapper.class).read(userid);
+	}
+	
 	public MemberDto login(Map<String, String> map) throws Exception{
-		if(map.get("userid") == null || map.get("userpwd")==null) return null;
+		if(map.get("userid") == null || map.get("userpw")==null) return null;
 		return sqlSession.getMapper(MemberMapper.class).login(map);
 	}
 	
@@ -33,4 +37,5 @@ public class MemberServiceImpl implements MemberService{
 	public void insert(MemberDto memberDto) {
 		sqlSession.getMapper(MemberMapper.class).insert(memberDto);		
 	}
+	
 }

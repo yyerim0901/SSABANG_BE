@@ -13,6 +13,7 @@
 	<select id="selectAll" resultType="com.ssafy.happyhouse.dto.BoardDto">
 	SELECT *
 	FROM BOARD
+	ORDER BY BNUM DESC
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultMap="boardDtoList">
