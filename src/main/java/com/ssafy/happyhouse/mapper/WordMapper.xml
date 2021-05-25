@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.WordMapper">
+	<select id="getWordCnt" parameterType="string" resultType="int">
+		select count(*)
+		from word_dictionary
+		where word like concat('%',#{word},'%') or descript like concat('%',#{word},'%') or ex like concat('%', #{word}, '%')
+	</select>
+	
+	<select id="getWordList" parameterType="map" resultType="WordDto">
+		select *
+		from word_dictionary
+		where word like concat('%',#{word},'%') or descript like concat('%',#{word},'%') or ex like concat('%', #{word}, '%')
+		limit #{start}, #{countperpage}
+	</select>
+	
+	<select id="getDetailWord" parameterType="int" resultType="WordDto">
+		select *
+		from word_dictionary
+		where wnum = #{wnum}
+	</select>
+	
+</mapper>

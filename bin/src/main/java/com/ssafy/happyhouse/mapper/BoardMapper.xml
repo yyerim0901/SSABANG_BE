@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.mapper.BoardMapper">
+	
+	<insert id="insert" parameterType="com.ssafy.happyhouse.dto.BoardDto">
+	INSERT INTO BOARD (BTITLE, BWRITER, BCONTENT)
+	VALUES(#{btitle},#{bwriter},#{bcontent})
+	<selectKey resultType="int" keyProperty="bnum" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
+	<select id="selectAll" resultType="com.ssafy.happyhouse.dto.BoardDto">
+	SELECT *
+	FROM BOARD
+	ORDER BY BNUM DESC
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="boardDtoList">
+	SELECT BNUM, BTITLE, BCONTENT, BWRITER, BREGDATE, VIEWNUM
+	FROM BOARD
+	WHERE BNUM=#{bnum}
+	</select>
+
+	
+	<select id="selectList" resultType="com.ssafy.happyhouse.dto.BoardDto">
+	SELECT BNUM, BTITLE, BCONTENT,BWRITER, BREGDATE, VIEWNUM
+	FROM BOARD
+	ORDER BY BNUM DESC LIMIT #{startRow},#{count}
+	</select>
+	
+	<select id="selectTotalCount" resultType="int">
+	SELECT COUNT(*)
+	FROM BOARD
+	</select>
+
+	<update id="addview" parameterType="int">
+	UPDATE BOARD
+	SET VIEWNUM = VIEWNUM+1
+	WHERE BNUM=#{bnum}
+	</update>
+	
+	<update id="update" parameterType="com.ssafy.happyhouse.dto.BoardDto">
+	UPDATE BOARD
+	SET BTITLE=#{btitle}, BWRITER=#{bwriter}, BCONTENT=#{bcontent}
+	WHERE BNUM=#{bnum}
+	</update>
+	
+	<select id="check" parameterType="int" resultType="String">
+	SELECT BWRITER
+	FROM BOARD
+	WHERE BNUM=#{bnum}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+	DELETE
+	FROM BOARD
+	WHERE BNUM=#{bnum}
+	</delete>
+	
+	<select id="fff" resultType="FileInfoDto">
+		select savefolder, originfile, savefile
+		from BOARD_FILE
+		where bnum = #{bnum}
+	</select>
+	
+	<resultMap type="BoardDto" id="boardDtoList">
+		<result property="bnum" column="bnum"/>
+		<result property="btitle" column="btitle"/>
+		<result property="bcontent" column="bcontent"/>
+		<result property="bwriter" column="bwriter"/>
+		<result property="bregdate" column="bregdate"/>
+		<collection property="fileInfos" column="bnum" javaType="list" ofType="FileInfoDto" select="fff"/>
+	</resultMap>
+	
+	<insert id="fileRegist" parameterType="com.ssafy.happyhouse.dto.BoardDto">
+	INSERT INTO BOARD_FILE (BNUM, SAVEFOLDER, ORIGINFILE, SAVEFILE)
+	VALUES
+	<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+	(#{bnum}, ${fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
+	</foreach>
+	</insert>
+	
+	
+	<select id="selectListByKey" resultType="com.ssafy.happyhouse.dto.BoardDto">
+	SELECT BNUM, BTITLE, BWRITER, BREGDATE 
+	FROM BOARD
+	WHERE ${searchCondition} LIKE '%${key}%'
+	ORDER BY BNUM DESC LIMIT #{startRow},#{count}
+	</select>
+	
+	<select id="selectTotalCountByKey" resultType="int">
+	SELECT COUNT(*)
+	FROM BOARD
+	WHERE ${searchCondition} LIKE '%${key}%'
+	</select>
+	
+</mapper>
