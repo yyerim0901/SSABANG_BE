@@ -36,7 +36,6 @@ public class WordController {
 	
 	@GetMapping(value={"","/","/{word}","/{word}/{pagenum}"})
 	public ResponseEntity<Map<String, Object>> searchAllWord(@PathVariable(required=false) String word, @PathVariable(required = false) Integer pagenum){
-		System.out.println("word request");
 		if(word==null) word = "";
 		int page=0;
 		if(pagenum==null) page = 1;
@@ -62,8 +61,6 @@ public class WordController {
 		result.put("currpage", currpage);
 		result.put("endpage", endpage);
 		result.put("totpage", totpage);
-		
-		System.out.println("startpage : " + startpage + " currpage : " + currpage + " endpage : " + endpage + " totpage : " + totpage);
 		
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
