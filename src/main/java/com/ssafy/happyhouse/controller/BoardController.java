@@ -56,7 +56,7 @@ public class BoardController {
 //			return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 //	}
 	
-	public static final int COUNT_PER_PAGE = 15;
+	public static final int COUNT_PER_PAGE = 10;
 	
 	@GetMapping(value={"/list","/list/{pagenum}"})
 	public ResponseEntity<Map<String, Object>> list(@PathVariable(required=false) Integer pagenum){
