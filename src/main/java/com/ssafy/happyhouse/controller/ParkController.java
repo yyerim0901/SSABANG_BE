@@ -29,7 +29,5 @@ public class ParkController {
 			return new ResponseEntity<List<ParkDto>>(HttpStatus.NO_CONTENT);
 		else
 			return new ResponseEntity<List<ParkDto>>(parkList, HttpStatus.OK);
-		
 	}
-	
 }

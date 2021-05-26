@@ -59,29 +59,13 @@
 	WHERE BNUM=#{bnum}
 	</delete>
 	
-	<select id="fff" resultType="FileInfoDto">
-		select savefolder, originfile, savefile
-		from BOARD_FILE
-		where bnum = #{bnum}
-	</select>
-	
 	<resultMap type="BoardDto" id="boardDtoList">
 		<result property="bnum" column="bnum"/>
 		<result property="btitle" column="btitle"/>
 		<result property="bcontent" column="bcontent"/>
 		<result property="bwriter" column="bwriter"/>
 		<result property="bregdate" column="bregdate"/>
-		<collection property="fileInfos" column="bnum" javaType="list" ofType="FileInfoDto" select="fff"/>
-	</resultMap>
-	
-	<insert id="fileRegist" parameterType="com.ssafy.happyhouse.dto.BoardDto">
-	INSERT INTO BOARD_FILE (BNUM, SAVEFOLDER, ORIGINFILE, SAVEFILE)
-	VALUES
-	<foreach collection="fileInfos" item="fileinfo" separator=" , ">
-	(#{bnum}, ${fileinfo.saveFolder}, #{fileinfo.originFile}, #{fileinfo.saveFile})
-	</foreach>
-	</insert>
-	
+	</resultMap>	
 	
 	<select id="selectListByKey" resultType="com.ssafy.happyhouse.dto.BoardDto">
 	SELECT BNUM, BTITLE, BWRITER, BREGDATE 

@@ -11,13 +11,11 @@ public class BoardDto {
 	private String bwriter;
 	private Date bregdate;
 	private int viewnum;
-	private List<FileInfoDto> fileInfos;
 	////////////////////////////////////////////////////////////////////////////
 
 	public BoardDto() {
 	}
-	public BoardDto(int bnum, String btitle, String bcontent, String bwriter, Date bregdate, int viewnum,
-			List<FileInfoDto> fileInfos) {
+	public BoardDto(int bnum, String btitle, String bcontent, String bwriter, Date bregdate, int viewnum) {
 		super();
 		this.bnum = bnum;
 		this.btitle = btitle;
@@ -25,13 +23,12 @@ public class BoardDto {
 		this.bwriter = bwriter;
 		this.bregdate = bregdate;
 		this.viewnum = viewnum;
-		this.fileInfos = fileInfos;
 	}
 	/////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public String toString() {
 		return "BoardDto [bnum=" + bnum + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bwriter=" + bwriter
-				+ ", bregdate=" + bregdate + ", viewnum=" + viewnum + ", fileInfos=" + fileInfos + "]";
+				+ ", bregdate=" + bregdate + ", viewnum=" + viewnum+"]";
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -82,12 +79,4 @@ public class BoardDto {
 	public void setViewnum(int viewnum) {
 		this.viewnum = viewnum;
 	}
-	public List<FileInfoDto> getFileInfos() {
-		return fileInfos;
-	}
-
-	public void setFileInfos(List<FileInfoDto> fileInfos) {
-		this.fileInfos = fileInfos;
-	}
-
 }

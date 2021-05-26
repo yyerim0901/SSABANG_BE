@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.dto.WordDto;
-import com.ssafy.happyhouse.service.WordService;
+import com.ssafy.happyhouse.service.WordServiceImpl;
 
 @RestController
 @CrossOrigin("*")
@@ -22,7 +22,7 @@ import com.ssafy.happyhouse.service.WordService;
 public class WordController {
 	
 	@Autowired
-	private WordService wService;
+	private WordServiceImpl wService;
 	
 	public static final int COUNT_PER_PAGE = 15;
 	

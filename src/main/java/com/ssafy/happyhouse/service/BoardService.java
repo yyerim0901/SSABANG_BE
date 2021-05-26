@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.happyhouse.dto.BoardDto;
-import com.ssafy.happyhouse.dto.CommentDto;
 
 public interface BoardService {
 
@@ -16,8 +15,5 @@ public interface BoardService {
 	public boolean update(BoardDto boardDto);
 	public String check(int bnum);
 	public int delete(int bnum);
-	public List<CommentDto> getCmtList(int bnum);
-	public boolean writeComment(CommentDto cmtDto);
-	public boolean deleteComment(int cnum);
 	public int getTotBoardList();
 }

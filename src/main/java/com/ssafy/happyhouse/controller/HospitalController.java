@@ -29,7 +29,5 @@ public class HospitalController {
 			return new ResponseEntity<List<HospitalDto>>(HttpStatus.NO_CONTENT);
 		else
 			return new ResponseEntity<List<HospitalDto>>(hList, HttpStatus.OK);
-		
 	}
-	
 }

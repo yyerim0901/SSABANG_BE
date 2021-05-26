@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.happyhouse.dto.BoardDto;
-import com.ssafy.happyhouse.dto.CommentDto;
 import com.ssafy.happyhouse.mapper.BoardMapper;
-import com.ssafy.happyhouse.mapper.CommentMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -23,10 +21,9 @@ public class BoardServiceImpl implements BoardService{
 	private SqlSession bdao;
 
 	@Autowired
-//	private CommentDao cdao;
 
 	private static final int COUNT_PER_PAGE=10;
-	////////////////////////////////////////////////////////////////////	
+	
 	public Map<String, Object> makePage(int page){
 		// 총 게시글 갯수 디비에서 조회함.
 		int totalCount = bdao.getMapper(BoardMapper.class).selectTotalCount();
@@ -62,14 +59,10 @@ public class BoardServiceImpl implements BoardService{
 		return bdao.getMapper(BoardMapper.class).selectAll(map);
 	}
 	
-	//원래 int형에서 void로 변경
 	@Transactional
 	public void write(BoardDto boardDto) throws SQLException {
 		BoardMapper boardMapper = bdao.getMapper(BoardMapper.class);
 		boardMapper.insert(boardDto);
-		if(boardDto.getFileInfos() != null) {
-			boardMapper.fileRegist(boardDto);
-		}
 	}
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -95,23 +88,4 @@ public class BoardServiceImpl implements BoardService{
 	public int getTotBoardList() {
 		return bdao.getMapper(BoardMapper.class).getTotBoardList();
 	}
-
-	///////////////////////////////////////////////////////////////////
-	public List<CommentDto> getCmtList(int bnum){
-		return bdao.getMapper(CommentMapper.class).selectList(bnum);
-	}
-
-	public boolean writeComment(CommentDto cmtDto) {
-		if(bdao.getMapper(CommentMapper.class).insert(cmtDto)>0)
-			return true;
-		return false;
-	}
-	
-	public boolean deleteComment(int cnum) {
-		if(bdao.getMapper(CommentMapper.class).delete(cnum)>0)
-			return true;
-		return false;
-	}
-	
-
 }

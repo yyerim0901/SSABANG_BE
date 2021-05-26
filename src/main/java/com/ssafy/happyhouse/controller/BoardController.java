@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 //import com.google.gson.Gson;
 import com.ssafy.happyhouse.dto.BoardDto;
-import com.ssafy.happyhouse.dto.FileInfoDto;
 import com.ssafy.happyhouse.service.BoardService;
 
 
@@ -45,16 +44,6 @@ public class BoardController {
 
 	@Autowired
 	ServletContext servletContext;
-
-//	@GetMapping
-//	public ResponseEntity<Map<String, Object>> list(@PathVariable int page) {
-//		Map<String, Object> result = bservice.makePage(page);
-//
-//		if(result == null || result.get("boardlist") == null || ((List)result.get("boardList")).size()==0 || result.size()==0) {
-//			return new ResponseEntity<Map<String, Object>>(HttpStatus.NO_CONTENT);
-//		}else 
-//			return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
-//	}
 	
 	public static final int COUNT_PER_PAGE = 10;
 	
@@ -95,36 +84,8 @@ public class BoardController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> write(@RequestBody BoardDto board, @PathVariable("upfile") MultipartFile[] files) throws IllegalStateException, IOException, SQLException {
-
-		if(files!= null && !files[0].isEmpty()) {
-			//String realPath = servletContext.getRealPath("/upload");
-			String realPath = servletContext.getRealPath("/resources/img");
-			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-			String saveFolder = realPath + File.separator + today;
-
-			File folder = new File(saveFolder);
-			if(!folder.exists())
-				folder.mkdirs();
-			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-			for(MultipartFile mfile : files) {
-				FileInfoDto fileInfoDto = new FileInfoDto();
-				String originalFileName = mfile.getOriginalFilename();
-				if(!originalFileName.isEmpty()) {
-					String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
-					fileInfoDto.setSaveFolder(today);
-					fileInfoDto.setOriginFile(originalFileName);
-					fileInfoDto.setSaveFile(saveFileName);
-
-					mfile.transferTo(new File(folder, saveFileName));
-				}
-				fileInfos.add(fileInfoDto);
-			}
-			board.setFileInfos(fileInfos);
-		}
-
+	public ResponseEntity<String> write(@RequestBody BoardDto board) throws SQLException {
 		bservice.write(board);
-		
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
 	
@@ -145,19 +106,4 @@ public class BoardController {
 		else
 			return new ResponseEntity<String>("fail",HttpStatus.NO_CONTENT);
 	}
-
-
-//	@GetMapping("/download")
-//	public ResponseEntity<T> download(@PathVariable String sfolder, @PathVariable String ofile,
-//			@PathVariable String sfile) {
-//
-//		Map<String, Object> fileInfo = new HashMap<String, Object>();
-//		fileInfo.put("sfolder",sfolder);
-//		fileInfo.put("ofile",ofile);
-//		fileInfo.put("sfile",sfile);
-//
-//		//FileDownLoadView로 옮겨가서....해야되는데...
-//
-//	}
-
 }

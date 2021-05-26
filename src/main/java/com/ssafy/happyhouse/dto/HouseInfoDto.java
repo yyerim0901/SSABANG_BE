@@ -4,10 +4,7 @@ public class HouseInfoDto {
 	
 	private int houseno, housebuildyear;
 	private String house_aptname, guname, lat, lng, housearea, housefloor, housejibun;
-	
-	
-	
-	
+
 	public String getHouse_aptname() {
 		return house_aptname;
 	}
