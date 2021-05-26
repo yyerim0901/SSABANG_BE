@@ -12,6 +12,7 @@
 		select *
 		from word_dictionary
 		where word like concat('%',#{word},'%') or descript like concat('%',#{word},'%') or ex like concat('%', #{word}, '%')
+		order by ex desc
 		limit #{start}, #{countperpage}
 	</select>
 	
