@@ -33,7 +33,6 @@ public class MemberController {
 	@GetMapping
 	public ResponseEntity<MemberDto> read(@RequestParam String userid){
 		MemberDto member = mService.read(userid);
-		
 		if(member == null)
 			return new ResponseEntity<MemberDto>(HttpStatus.NO_CONTENT);
 		else

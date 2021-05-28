@@ -24,7 +24,7 @@ public class WordController {
 	@Autowired
 	private WordServiceImpl wService;
 	
-	public static final int COUNT_PER_PAGE = 15;
+	public static final int COUNT_PER_PAGE = 15; //한 페이지당 보여주는 글 갯수
 	
 	@GetMapping(value="/detail/{wnum}")
 	public ResponseEntity<WordDto> searchDetailWord(@PathVariable int wnum){
@@ -41,13 +41,13 @@ public class WordController {
 		if(pagenum==null) page = 1;
 		else page = pagenum;
 		
-		int totWordCnt = wService.getWordCnt(word);
-		int totpage = totWordCnt/COUNT_PER_PAGE;
-		if(totWordCnt%COUNT_PER_PAGE>0) totpage++;
+		int totWordCnt = wService.getWordCnt(word); //전체 word개수
+		int totpage = totWordCnt/COUNT_PER_PAGE; //만들어야하는 전체 페이지 수
+		if(totWordCnt%COUNT_PER_PAGE>0) totpage++; //페이지들 채우고 꽉 차지 않는 한 페이지가 만들어질 때 페이지 추가
 		
-		int startpage = (((page-1)/10)*10)+1;
-		int currpage = page;
-		int endpage = startpage+9 > totpage? totpage:startpage+9;
+		int startpage = (((page-1)/5)*5)+1; //시작페이지는 ((입력받은 페이지)/5*5)+1
+		int currpage = page; //현재 입력받은 페이지
+		int endpage = startpage+4 > totpage? totpage:startpage+4; //시작페이지에 따른 끝 페이지
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("start", (currpage-1)*COUNT_PER_PAGE);
