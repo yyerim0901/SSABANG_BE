@@ -1,4 +1,4 @@
-# 0518_pairproject_vue
+# 0518_pairproject
 
 ## member
 김예림, 박민상
