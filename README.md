@@ -1,6 +1,6 @@
 # 0518_pairproject
 
-## Frontend -> https://github.com/yyerim0901/SSABANG_SSAFY_FinalProject_FrontEnd.git
+- Frontend -> https://github.com/yyerim0901/SSABANG_SSAFY_FinalProject_FrontEnd.git
 
 ## member
 김예림, 박민상
