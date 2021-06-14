@@ -1,4 +1,4 @@
-# 0518_pairproject
+# 0518_pairproject_BackEnd
 
 - Frontend -> https://github.com/yyerim0901/SSABANG_SSAFY_FinalProject_FrontEnd.git
 
